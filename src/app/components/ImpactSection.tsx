@@ -20,11 +20,11 @@ const PHRASES = [
 
 // ─── DNA traits ───────────────────────────────────────────────────────────────
 const DNA = [
-  { label: "Research Driven",   pct: 92, color: "#E6FF4D" },
-  { label: "Systems Thinking",  pct: 90, color: "#A78BFA" },
-  { label: "Problem Solving",   pct: 95, color: "#34D399" },
-  { label: "User Empathy",      pct: 94, color: "#F472B6" },
-  { label: "Interaction Design",pct: 89, color: "#06B6D4" },
+  { label: "Research Driven", pct: 92, color: "#E6FF4D" },
+  { label: "Systems Thinking", pct: 90, color: "#A78BFA" },
+  { label: "Problem Solving", pct: 95, color: "#34D399" },
+  { label: "User Empathy", pct: 94, color: "#F472B6" },
+  { label: "Interaction Design", pct: 89, color: "#06B6D4" },
 ];
 
 // ─── Static grid background (no looping animations) ──────────────────────────
@@ -619,7 +619,7 @@ export function ImpactSection() {
                   </p>
                 </div>
                 <div className="flex flex-col gap-1.5 items-end shrink-0 ml-6">
-                  {["Figma", "FigJam", "Lottie"].map((t) => (
+                  {["Figma", "FigJam"].map((t) => (
                     <span
                       key={t}
                       style={{
