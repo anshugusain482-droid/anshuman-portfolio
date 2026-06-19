@@ -56,27 +56,27 @@ function FloatingLabel({
       transition={{ duration: 0.85, delay: entranceDelay, ease: EASE }}
     >
       <div
-          style={{
-            padding: "8px 15px",
-            borderRadius: 100,
-            background: "rgba(8,8,8,0.75)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            backdropFilter: "blur(24px)",
-            WebkitBackdropFilter: "blur(24px)",
-            boxShadow:
-              "0 8px 32px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06)",
-            fontFamily: "'Inter Tight', sans-serif",
-            fontSize: 10,
-            fontWeight: 500,
-            color: "rgba(255,255,255,0.65)",
-            letterSpacing: "0.08em",
-            textTransform: "uppercase" as const,
-            whiteSpace: "nowrap" as const,
-            transform: "translate3d(0,0,0)",
-          }}
-        >
-          {text}
-        </div>
+        style={{
+          padding: "8px 15px",
+          borderRadius: 100,
+          background: "rgba(8,8,8,0.75)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          boxShadow:
+            "0 8px 32px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06)",
+          fontFamily: "'Inter Tight', sans-serif",
+          fontSize: 10,
+          fontWeight: 500,
+          color: "rgba(255,255,255,0.65)",
+          letterSpacing: "0.08em",
+          textTransform: "uppercase" as const,
+          whiteSpace: "nowrap" as const,
+          transform: "translate3d(0,0,0)",
+        }}
+      >
+        {text}
+      </div>
     </motion.div>
   );
 }
@@ -133,15 +133,15 @@ const LABELS: Array<{
   entranceDelay: number;
   pxFactor: number;
 }> = [
-  { text: "User Research",      top: "20%", left: "5%",   floatAmp: 9,  floatDur: 4.4, entranceDelay: 2.2, pxFactor: 75  },
-  { text: "Design Systems",     top: "16%", right: "5%",  floatAmp: 7,  floatDur: 5.1, entranceDelay: 2.4, pxFactor: 58  },
-  { text: "Wireframes",         top: "42%", left: "3%",   floatAmp: 11, floatDur: 4.0, entranceDelay: 2.6, pxFactor: 92  },
-  { text: "Prototyping",        top: "40%", right: "3%",  floatAmp: 9,  floatDur: 4.6, entranceDelay: 2.3, pxFactor: 70  },
-  { text: "Case Studies",       top: "65%", left: "6%",   floatAmp: 8,  floatDur: 5.3, entranceDelay: 2.5, pxFactor: 52  },
-  { text: "Interaction Design", top: "63%", right: "5%",  floatAmp: 10, floatDur: 4.1, entranceDelay: 2.7, pxFactor: 85  },
-  { text: "Product Strategy",   top: "29%", left: "18%",  floatAmp: 7,  floatDur: 4.9, entranceDelay: 2.8, pxFactor: 42  },
-  { text: "User Flows",         top: "53%", right: "15%", floatAmp: 9,  floatDur: 3.8, entranceDelay: 2.9, pxFactor: 62  },
-];
+    { text: "User Research", top: "20%", left: "5%", floatAmp: 9, floatDur: 4.4, entranceDelay: 2.2, pxFactor: 75 },
+    { text: "Design Systems", top: "16%", right: "5%", floatAmp: 7, floatDur: 5.1, entranceDelay: 2.4, pxFactor: 58 },
+    { text: "Wireframes", top: "42%", left: "3%", floatAmp: 11, floatDur: 4.0, entranceDelay: 2.6, pxFactor: 92 },
+    { text: "Prototyping", top: "40%", right: "3%", floatAmp: 9, floatDur: 4.6, entranceDelay: 2.3, pxFactor: 70 },
+    { text: "Case Studies", top: "65%", left: "6%", floatAmp: 8, floatDur: 5.3, entranceDelay: 2.5, pxFactor: 52 },
+    { text: "Interaction Design", top: "63%", right: "5%", floatAmp: 10, floatDur: 4.1, entranceDelay: 2.7, pxFactor: 85 },
+    { text: "Product Strategy", top: "29%", left: "18%", floatAmp: 7, floatDur: 4.9, entranceDelay: 2.8, pxFactor: 42 },
+    { text: "User Flows", top: "53%", right: "15%", floatAmp: 9, floatDur: 3.8, entranceDelay: 2.9, pxFactor: 62 },
+  ];
 
 // ─── HeroSection ─────────────────────────────────────────────────────────────
 export function HeroSection() {
@@ -197,7 +197,7 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#050505]"
+      className="hero-section relative overflow-hidden bg-[#050505]"
       style={{ minHeight: "100svh" }}
     >
       {/* ── Cinematic entrance: full black overlay fades out ── */}
@@ -306,7 +306,7 @@ export function HeroSection() {
           LAYER 2 — Portrait (centered, 80vh, scroll + mouse parallax)
       ══════════════════════════════════════════════════════════ */}
       <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        className="hero-portrait-layer absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{
           x: portMouseX,
           y: useTransform(
@@ -332,9 +332,9 @@ export function HeroSection() {
           <div
             style={{
               position: "relative",
-              height: "min(80vh, 700px)",
+              height: "min(74vh, 640px)",
               display: "flex",
-              alignItems: "flex-end",
+              alignItems: "center",
               justifyContent: "center",
             }}
           >
@@ -369,7 +369,7 @@ export function HeroSection() {
                   "grayscale(0.78) brightness(0.75) contrast(1.12) saturate(0.5)",
                 position: "relative",
                 zIndex: 2,
-                transform: "translate3d(0,0,0)",
+                transform: "translate3d(0,-6%,0)",
                 willChange: "transform",
               }}
             />
@@ -391,7 +391,7 @@ export function HeroSection() {
           LAYER 3 — Floating labels (scroll + mouse parallax)
       ══════════════════════════════════════════════════════════ */}
       <motion.div
-        className="absolute inset-0 pointer-events-none"
+        className="hero-label-layer absolute inset-0 pointer-events-none"
         style={{ y: labelScrollY, zIndex: 8, willChange: "transform" }}
       >
         {LABELS.map((label) => (
@@ -408,7 +408,7 @@ export function HeroSection() {
           CONTENT — choreographed sequence
       ══════════════════════════════════════════════════════════ */}
       <motion.div
-        className="absolute inset-0 flex flex-col justify-between pointer-events-none"
+        className="hero-content-layer absolute inset-0 flex flex-col justify-between pointer-events-none"
         style={{ opacity: heroOpacity, y: contentScrollY, zIndex: 10, willChange: "transform, opacity" }}
       >
         {/* ── Top bar ── */}

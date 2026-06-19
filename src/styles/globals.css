@@ -101,3 +101,133 @@ svg {
         background-repeat: no-repeat !important;
     }
 }
+
+/* ---------- Safe responsive fix: laptop + mobile hero + bento ---------- */
+
+@media (max-width: 768px) {
+
+    html,
+    body,
+    #root {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .hero-section {
+        min-height: 100svh !important;
+        overflow: hidden !important;
+    }
+
+    /* Mobile par messy floating tags hide */
+    .hero-label-layer {
+        display: none !important;
+    }
+
+    /* Mobile portrait ko text se alag area me rakho */
+    .hero-portrait-layer {
+        inset: 185px 0 275px 0 !important;
+        z-index: 4 !important;
+    }
+
+    .hero-portrait-layer>div {
+        transform: none !important;
+    }
+
+    .hero-portrait-layer>div>div {
+        height: clamp(300px, 42svh, 390px) !important;
+        align-items: center !important;
+    }
+
+    .hero-portrait-layer img {
+        height: 100% !important;
+        width: auto !important;
+        transform: translate3d(0, 0, 0) !important;
+        opacity: 0.82;
+    }
+
+    /* Mobile content ko readable banao */
+    .hero-content-layer {
+        z-index: 10 !important;
+    }
+
+    .hero-content-layer>div:first-child {
+        padding-left: 24px !important;
+        padding-right: 24px !important;
+        padding-top: 76px !important;
+    }
+
+    .hero-content-layer>div:last-child {
+        padding: 0 22px 34px !important;
+    }
+
+    .hero-content-layer h1 {
+        font-size: clamp(2.35rem, 10vw, 3.15rem) !important;
+        line-height: 0.95 !important;
+        letter-spacing: -0.045em !important;
+    }
+
+    .hero-content-layer p {
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+        max-width: 30ch !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .hero-content-layer a {
+        min-width: 0 !important;
+        padding: 15px 22px !important;
+        font-size: 13px !important;
+    }
+
+    .hero-content-layer a:first-child {
+        min-width: 170px !important;
+    }
+
+    /* Expertise bento grid mobile par single column */
+    .expertise-bento-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: none !important;
+        grid-template-areas: none !important;
+        gap: 16px !important;
+    }
+
+    .expertise-bento-grid>* {
+        grid-area: auto !important;
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+
+    .expertise-bento-grid * {
+        max-width: 100% !important;
+        overflow-wrap: break-word;
+    }
+
+    .expertise-bento-grid>*>* {
+        transform: none !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .hero-portrait-layer {
+        inset: 200px 0 285px 0 !important;
+    }
+
+    .hero-portrait-layer>div>div {
+        height: clamp(275px, 39svh, 350px) !important;
+    }
+
+    .hero-content-layer>div:first-child {
+        padding-top: 72px !important;
+    }
+
+    .hero-content-layer>div:last-child {
+        padding-bottom: 28px !important;
+    }
+
+    .hero-content-layer h1 {
+        font-size: clamp(2.1rem, 10vw, 2.75rem) !important;
+    }
+}
