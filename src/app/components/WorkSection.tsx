@@ -1,10 +1,7 @@
 import { useRef, useState, useCallback } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import scribblyImg from "../../imports/Screenshot_2026-06-15_115505.png";
-import adhdImg from "../../imports/Screenshot_2026-06-15_115541.png";
-import ethnographicImg from "../../imports/Screenshot_2026-06-15_115601.png";
-import greenHospImg from "../../imports/Screenshot_2026-06-15_115637.png";
+
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -21,7 +18,7 @@ const projects = [
     outcome: "Designed in 3 weeks with a 6-member team. Achieved high engagement scores in usability testing.",
     color: "#F59E0B",
     accentBg: "rgba(245,158,11,0.07)",
-    img: scribblyImg,
+    img: "/project-image/Screenshot_1.png",
     behance: "https://www.behance.net/anshumangusain",
   },
   {
@@ -36,7 +33,7 @@ const projects = [
     outcome: "Deep UX research with competitive analysis, user interviews with educators, and high-fidelity prototypes.",
     color: "#8B5CF6",
     accentBg: "rgba(139,92,246,0.07)",
-    img: adhdImg,
+    img: "/project-image/Screenshot_2.png",
     behance: "https://www.behance.net/anshumangusain",
   },
   {
@@ -51,7 +48,7 @@ const projects = [
     outcome: "Ethnographic research, field visits, and visual design to create an authentic heritage experience.",
     color: "#06B6D4",
     accentBg: "rgba(6,182,212,0.07)",
-    img: ethnographicImg,
+    img: "/project-image/Screenshot_3.png",
     behance: "https://www.behance.net/anshumangusain",
   },
   {
@@ -66,7 +63,7 @@ const projects = [
     outcome: "End-to-end product design including brand identity, UI system, and booking flow.",
     color: "#22C55E",
     accentBg: "rgba(34,197,94,0.07)",
-    img: greenHospImg,
+    img: "/project-image/Screenshot_4.png",
     behance: "https://www.behance.net/anshumangusain",
   },
 ];
@@ -136,7 +133,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
             <ImageWithFallback
               src={project.img}
               alt={project.title}
-              className="w-full h-full object-cover object-top"
+              className="w-full h-full object-contain sm:object-cover object-top bg-[#0B0B0B]"
             />
           </motion.div>
 
