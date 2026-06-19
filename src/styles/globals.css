@@ -17,7 +17,22 @@ svg {
     max-width: 100%;
 }
 
-section,
-div {
-    max-width: 100%;
+@media (max-width: 768px) {
+
+    html,
+    body,
+    #root {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        position: relative;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
 }

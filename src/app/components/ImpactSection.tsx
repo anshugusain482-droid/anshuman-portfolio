@@ -469,7 +469,7 @@ export function ImpactSection() {
         </div>
 
         {/* ── Main two-column grid ── */}
-        <div className="grid lg:grid-cols-[1fr_400px] gap-16 xl:gap-24 items-start mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,400px)] gap-8 lg:gap-16 xl:gap-24 items-start mb-24">
 
           {/* ════ LEFT: Rotating headline + philosophy ═══════════════════════ */}
           <div>
