@@ -36,3 +36,68 @@ svg {
         height: auto;
     }
 }
+
+@media (max-width: 768px) {
+
+    html,
+    body,
+    #root {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .impact-mobile-grid {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .impact-mobile-grid,
+    .impact-mobile-grid .grid,
+    .impact-mobile-grid [class*="grid-cols"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    .impact-mobile-grid>*,
+    .impact-mobile-grid * {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .impact-mobile-grid [class*="gap-16"],
+    .impact-mobile-grid [class*="gap-24"] {
+        gap: 2rem !important;
+    }
+
+    .impact-mobile-grid h1,
+    .impact-mobile-grid h2,
+    .impact-mobile-grid h3,
+    .impact-mobile-grid p,
+    .impact-mobile-grid span {
+        max-width: 100%;
+        overflow-wrap: break-word;
+    }
+}
+
+@media (max-width: 768px) {
+    .work-mobile-fix {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .work-mobile-fix img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: contain !important;
+        object-position: top center !important;
+    }
+
+    .work-mobile-fix [style*="background-image"] {
+        background-size: contain !important;
+        background-position: top center !important;
+        background-repeat: no-repeat !important;
+    }
+}
