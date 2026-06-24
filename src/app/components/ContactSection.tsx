@@ -5,8 +5,8 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const socials = [
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/anshu-gusain-855624310/",
-    handle: "anshu-gusain",
+    href: "https://www.linkedin.com/in/anshuman-gusain-855624310/?skipRedirect=true",
+    handle: "anshuman-gusain",
     icon: "in",
   },
   {
@@ -86,7 +86,7 @@ export function ContactSection() {
           {/* CTA buttons */}
           <div className="flex flex-wrap gap-4 mb-20">
             <motion.a
-              href="https://www.linkedin.com/in/anshu-gusain-855624310/"
+              href="https://www.linkedin.com/in/anshuman-gusain-855624310/?skipRedirect=true"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.02 }}
