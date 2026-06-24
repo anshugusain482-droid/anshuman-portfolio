@@ -408,54 +408,10 @@ export function HeroSection() {
           CONTENT — choreographed sequence
       ══════════════════════════════════════════════════════════ */}
       <motion.div
-        className="hero-content-layer absolute inset-0 flex flex-col justify-between pointer-events-none"
+        className="hero-content-layer absolute inset-0 flex flex-col justify-end pointer-events-none"
         style={{ opacity: heroOpacity, y: contentScrollY, zIndex: 10, willChange: "transform, opacity" }}
       >
-        {/* ── Top bar ── */}
-        <motion.div
-          className="flex items-center justify-between px-8 pointer-events-auto"
-          style={{ paddingTop: 96 }}
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.6, ease: EASE }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#E6FF4D" }} />
-            <span
-              style={{
-                fontFamily: "'Inter Tight', sans-serif",
-                fontSize: 10,
-                color: "rgba(255,255,255,0.4)",
-                letterSpacing: "0.26em",
-                textTransform: "uppercase",
-              }}
-            >
-              UX/UI Designer
-            </span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-            <div
-              style={{
-                width: 5,
-                height: 5,
-                borderRadius: "50%",
-                background: "#4ade80",
-                boxShadow: "0 0 8px rgba(74,222,128,0.55)",
-              }}
-            />
-            <span
-              style={{
-                fontFamily: "'Inter Tight', sans-serif",
-                fontSize: 10,
-                color: "rgba(255,255,255,0.38)",
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-              }}
-            >
-              Open to work
-            </span>
-          </div>
-        </motion.div>
+
 
         {/* ── Bottom zone: name + title + CTAs ── */}
         <div
@@ -529,38 +485,7 @@ export function HeroSection() {
             <MagneticBtn href="#contact">Let's Connect</MagneticBtn>
           </motion.div>
 
-          {/* Scroll nudge — static, orientation only */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.4, duration: 0.8, ease: EASE }}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 7,
-              marginTop: 28,
-            }}
-          >
-            <div
-              style={{
-                width: 1,
-                height: 28,
-                background: "linear-gradient(to bottom, rgba(255,255,255,0.18), transparent)",
-              }}
-            />
-            <span
-              style={{
-                fontFamily: "'Inter Tight', sans-serif",
-                fontSize: 9,
-                color: "#8A8A8A",
-                letterSpacing: "0.32em",
-                textTransform: "uppercase",
-              }}
-            >
-              Scroll
-            </span>
-          </motion.div>
+
         </div>
       </motion.div>
     </section>
