@@ -7,7 +7,7 @@ import {
   useScroll,
   useReducedMotion,
 } from "motion/react";
-import anshumanPhoto from "../../imports/IMG_2215_1.png";
+const anshumanPhoto = "/profile/anshuman.png";
 
 // ─── Premium easing ───────────────────────────────────────────────────────────
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];

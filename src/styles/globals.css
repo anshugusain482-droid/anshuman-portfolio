@@ -1,3 +1,267 @@
+/* ---------- Global responsive safety system ---------- */
+
+html,
+body,
+#root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    background: #050505;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+}
+
+section {
+    scroll-margin-top: 90px;
+}
+
+/* ---------- Mobile fixes ---------- */
+
+@media (max-width: 768px) {
+
+    html,
+    body,
+    #root {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        position: relative;
+    }
+
+    /* HERO FIX */
+    .hero-section {
+        min-height: 100svh !important;
+        overflow: hidden !important;
+    }
+
+    /* Hide messy floating tags on mobile */
+    .hero-label-layer {
+        display: none !important;
+    }
+
+    /* Stop desktop parallax/tilt from breaking mobile */
+    .hero-portrait-layer {
+        inset: 165px 0 255px 0 !important;
+        z-index: 4 !important;
+        transform: none !important;
+        opacity: 0.78 !important;
+    }
+
+    .hero-portrait-layer>div {
+        transform: none !important;
+    }
+
+    .hero-portrait-layer>div>div {
+        height: clamp(260px, 38svh, 360px) !important;
+        max-width: 74vw !important;
+        overflow: hidden !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .hero-portrait-layer img {
+        height: 100% !important;
+        width: auto !important;
+        max-width: none !important;
+        transform: translate3d(0, -4%, 0) !important;
+        opacity: 0.72 !important;
+    }
+
+    .hero-content-layer {
+        z-index: 10 !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .hero-content-layer>div:first-child {
+        padding-left: 24px !important;
+        padding-right: 24px !important;
+        padding-top: 92px !important;
+    }
+
+    .hero-content-layer>div:first-child span {
+        font-size: 9px !important;
+        letter-spacing: 0.2em !important;
+    }
+
+    .hero-content-layer>div:last-child {
+        padding: 0 22px 34px !important;
+    }
+
+    .hero-content-layer h1 {
+        font-size: clamp(2rem, 8.5vw, 2.6rem) !important;
+        line-height: 0.96 !important;
+        letter-spacing: -0.045em !important;
+    }
+
+    .hero-content-layer p {
+        font-size: 12px !important;
+        line-height: 1.45 !important;
+        max-width: 31ch !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: 14px !important;
+    }
+
+    /* Hide hairline and scroll text on mobile to reduce clutter */
+    .hero-content-layer>div:last-child>div:nth-child(3),
+    .hero-content-layer>div:last-child>div:nth-child(5) {
+        display: none !important;
+    }
+
+    .hero-content-layer>div:last-child>div:nth-child(4) {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .hero-content-layer a {
+        min-width: 0 !important;
+        padding: 14px 18px !important;
+        font-size: 12px !important;
+        cursor: pointer !important;
+    }
+
+    .hero-content-layer a:first-child {
+        min-width: 160px !important;
+    }
+
+    .hero-content-layer a:last-child {
+        min-width: 135px !important;
+    }
+
+    /* WORK SECTION FIX */
+    .work-mobile-fix {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        padding-left: 24px !important;
+        padding-right: 24px !important;
+    }
+
+    .work-mobile-fix img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: contain !important;
+        object-position: top center !important;
+    }
+
+    .work-mobile-fix [style*="perspective"],
+    .work-mobile-fix [style*="transform-style"] {
+        transform: none !important;
+    }
+
+    /* EXPERTISE BENTO GRID FIX */
+    .expertise-bento-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: none !important;
+        grid-template-areas: none !important;
+        grid-auto-rows: auto !important;
+        gap: 16px !important;
+    }
+
+    .expertise-bento-grid>* {
+        grid-area: auto !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .expertise-bento-grid>*>* {
+        height: auto !important;
+        min-height: 230px !important;
+        transform: none !important;
+    }
+
+    .expertise-bento-grid * {
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .expertise-bento-grid h1,
+    .expertise-bento-grid h2,
+    .expertise-bento-grid h3,
+    .expertise-bento-grid p,
+    .expertise-bento-grid span {
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .impact-mobile-grid {
+        grid-template-columns: 1fr !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    .impact-mobile-grid>* {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Small iPhone screens */
+@media (max-width: 420px) {
+    .hero-portrait-layer {
+        inset: 172px 0 265px 0 !important;
+    }
+
+    .hero-portrait-layer>div>div {
+        height: clamp(245px, 36svh, 330px) !important;
+    }
+
+    .hero-content-layer>div:first-child {
+        padding-top: 88px !important;
+    }
+
+    .hero-content-layer>div:last-child {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+        padding-bottom: 30px !important;
+    }
+
+    .hero-content-layer h1 {
+        font-size: clamp(1.9rem, 8vw, 2.45rem) !important;
+    }
+
+    .hero-content-layer a {
+        padding: 13px 16px !important;
+        font-size: 12px !important;
+    }
+
+    .hero-content-layer a:first-child {
+        min-width: 150px !important;
+    }
+
+    .hero-content-layer a:last-child {
+        min-width: 125px !important;
+    }
+
+    .work-mobile-fix {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+}
+
+/* ===============================
+   MOBILE RESPONSIVE FIX
+   =============================== */
+
 html,
 body,
 #root {
@@ -17,217 +281,138 @@ svg {
     max-width: 100%;
 }
 
-@media (max-width: 768px) {
-
-    html,
-    body,
-    #root {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-
-    body {
-        position: relative;
-    }
-
-    img {
-        max-width: 100%;
-        height: auto;
-    }
+/* Fixed navbar ke liye spacing */
+section {
+    scroll-margin-top: 110px;
 }
 
+/* Mobile fix */
 @media (max-width: 768px) {
 
     html,
     body,
     #root {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-
-    .impact-mobile-grid {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-
-    .impact-mobile-grid,
-    .impact-mobile-grid .grid,
-    .impact-mobile-grid [class*="grid-cols"] {
-        grid-template-columns: 1fr !important;
-    }
-
-    .impact-mobile-grid>*,
-    .impact-mobile-grid * {
-        min-width: 0 !important;
+        overflow-x: hidden !important;
         max-width: 100% !important;
     }
 
-    .impact-mobile-grid [class*="gap-16"],
-    .impact-mobile-grid [class*="gap-24"] {
-        gap: 2rem !important;
+    /* Navbar mobile par clean rahe */
+    nav {
+        min-height: 88px !important;
+        padding: 22px 20px !important;
+        background: rgba(5, 5, 5, 0.88) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
     }
 
-    .impact-mobile-grid h1,
-    .impact-mobile-grid h2,
-    .impact-mobile-grid h3,
-    .impact-mobile-grid p,
-    .impact-mobile-grid span {
-        max-width: 100%;
-        overflow-wrap: break-word;
-    }
-}
-
-@media (max-width: 768px) {
+    /* Work section ko header se neeche push karega */
     .work-mobile-fix {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
+        padding-top: 120px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        padding-bottom: 110px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    /* Work cards mobile par single column */
+    .work-mobile-fix .grid {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+    }
+
+    .work-mobile-fix>* {
+        max-width: 100% !important;
     }
 
     .work-mobile-fix img {
         width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-        object-fit: contain !important;
+        height: 100% !important;
+        object-fit: cover !important;
         object-position: top center !important;
     }
 
-    .work-mobile-fix [style*="background-image"] {
-        background-size: contain !important;
-        background-position: top center !important;
-        background-repeat: no-repeat !important;
-    }
-}
-
-/* ---------- Safe responsive fix: laptop + mobile hero + bento ---------- */
-
-@media (max-width: 768px) {
-
-    html,
-    body,
-    #root {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
+    .work-mobile-fix h2,
+    .work-mobile-fix h3,
+    .work-mobile-fix p,
+    .work-mobile-fix span {
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
     }
 
-    .hero-section {
-        min-height: 100svh !important;
-        overflow: hidden !important;
+    .work-mobile-fix h3 {
+        font-size: 24px !important;
+        line-height: 1.15 !important;
     }
 
-    /* Mobile par messy floating tags hide */
-    .hero-label-layer {
-        display: none !important;
+    .work-mobile-fix p {
+        font-size: 14px !important;
+        line-height: 1.6 !important;
     }
 
-    /* Mobile portrait ko text se alag area me rakho */
-    .hero-portrait-layer {
-        inset: 185px 0 275px 0 !important;
-        z-index: 4 !important;
+    /* Expertise Bento Grid mobile fix */
+    #expertise {
+        padding-top: 120px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        overflow-x: hidden !important;
     }
 
-    .hero-portrait-layer>div {
-        transform: none !important;
-    }
-
-    .hero-portrait-layer>div>div {
-        height: clamp(300px, 42svh, 390px) !important;
-        align-items: center !important;
-    }
-
-    .hero-portrait-layer img {
-        height: 100% !important;
-        width: auto !important;
-        transform: translate3d(0, 0, 0) !important;
-        opacity: 0.82;
-    }
-
-    /* Mobile content ko readable banao */
-    .hero-content-layer {
-        z-index: 10 !important;
-    }
-
-    .hero-content-layer>div:first-child {
-        padding-left: 24px !important;
-        padding-right: 24px !important;
-        padding-top: 76px !important;
-    }
-
-    .hero-content-layer>div:last-child {
-        padding: 0 22px 34px !important;
-    }
-
-    .hero-content-layer h1 {
-        font-size: clamp(2.35rem, 10vw, 3.15rem) !important;
-        line-height: 0.95 !important;
-        letter-spacing: -0.045em !important;
-    }
-
-    .hero-content-layer p {
-        font-size: 13px !important;
-        line-height: 1.55 !important;
-        max-width: 30ch !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    .hero-content-layer a {
-        min-width: 0 !important;
-        padding: 15px 22px !important;
-        font-size: 13px !important;
-    }
-
-    .hero-content-layer a:first-child {
-        min-width: 170px !important;
-    }
-
-    /* Expertise bento grid mobile par single column */
     .expertise-bento-grid {
         display: grid !important;
         grid-template-columns: 1fr !important;
-        grid-template-rows: none !important;
+        grid-template-rows: auto !important;
         grid-template-areas: none !important;
-        gap: 16px !important;
+        gap: 18px !important;
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
     .expertise-bento-grid>* {
         grid-area: auto !important;
-        min-width: 0 !important;
         width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
     }
 
     .expertise-bento-grid * {
         max-width: 100% !important;
-        overflow-wrap: break-word;
+        overflow-wrap: break-word !important;
     }
 
-    .expertise-bento-grid>*>* {
-        transform: none !important;
+    /* Impact grid mobile par single column */
+    .impact-mobile-grid {
+        grid-template-columns: 1fr !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    .impact-mobile-grid>* {
+        min-width: 0 !important;
+        max-width: 100% !important;
     }
 }
 
+/* Small phone fix */
 @media (max-width: 420px) {
-    .hero-portrait-layer {
-        inset: 200px 0 285px 0 !important;
+    nav {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
     }
 
-    .hero-portrait-layer>div>div {
-        height: clamp(275px, 39svh, 350px) !important;
+    .work-mobile-fix {
+        padding-top: 115px !important;
+        padding-left: 18px !important;
+        padding-right: 18px !important;
     }
 
-    .hero-content-layer>div:first-child {
-        padding-top: 72px !important;
+    .work-mobile-fix h3 {
+        font-size: 22px !important;
     }
 
-    .hero-content-layer>div:last-child {
-        padding-bottom: 28px !important;
-    }
-
-    .hero-content-layer h1 {
-        font-size: clamp(2.1rem, 10vw, 2.75rem) !important;
+    .work-mobile-fix p {
+        font-size: 13px !important;
     }
 }
