@@ -1,58 +1,120 @@
-import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useRef } from "react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useScroll,
+  useReducedMotion,
+} from "motion/react";
 import anshumanPhoto from "../../imports/IMG_2215_1.png";
 
+// ─── Premium easing ───────────────────────────────────────────────────────────
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const MOBILE_LABELS = [
-  "User Research",
-  "Product Strategy",
-  "Wireframes",
-  "Prototyping",
-  "Case Studies",
-  "User Flows",
-  "Interaction Design",
-  "Design Systems",
-];
+// ─── Floating discipline label ────────────────────────────────────────────────
+function FloatingLabel({
+  text,
+  top,
+  left,
+  right,
+  floatAmp,
+  floatDur,
+  entranceDelay,
+  pxFactor,
+  smX,
+  smY,
+}: {
+  text: string;
+  top?: string;
+  left?: string;
+  right?: string;
+  floatAmp: number;
+  floatDur: number;
+  entranceDelay: number;
+  pxFactor: number;
+  smX: ReturnType<typeof useSpring>;
+  smY: ReturnType<typeof useSpring>;
+}) {
+  const lx = useTransform(smX, (v: number) => v * pxFactor);
+  const ly = useTransform(smY, (v: number) => v * pxFactor * 0.6);
 
-const DESKTOP_LABELS = [
-  { text: "User Research", top: "22%", left: "4%" },
-  { text: "Product Strategy", top: "34%", left: "17%" },
-  { text: "Wireframes", top: "50%", left: "3%" },
-  { text: "Case Studies", top: "73%", left: "6%" },
-  { text: "Design Systems", top: "18%", right: "4%" },
-  { text: "Prototyping", top: "48%", right: "3%" },
-  { text: "User Flows", top: "62%", right: "14%" },
-  { text: "Interaction Design", top: "71%", right: "6%" },
-];
-
-function SkillPill({ children }: { children: ReactNode }) {
   return (
-    <span className="shrink-0 rounded-full border border-white/10 bg-black/45 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.12em] text-white/60 backdrop-blur-2xl">
-      {children}
-    </span>
+    <motion.div
+      style={{
+        position: "absolute",
+        top,
+        left,
+        right,
+        zIndex: 8,
+        x: lx,
+        y: ly,
+        willChange: "transform",
+      }}
+      initial={{ opacity: 0, scale: 0.9, filter: "blur(4px)" }}
+      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+      transition={{ duration: 0.85, delay: entranceDelay, ease: EASE }}
+    >
+      <div
+        style={{
+          padding: "8px 15px",
+          borderRadius: 100,
+          background: "rgba(8,8,8,0.75)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          boxShadow:
+            "0 8px 32px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06)",
+          fontFamily: "'Inter Tight', sans-serif",
+          fontSize: 10,
+          fontWeight: 500,
+          color: "rgba(255,255,255,0.65)",
+          letterSpacing: "0.08em",
+          textTransform: "uppercase" as const,
+          whiteSpace: "nowrap" as const,
+          transform: "translate3d(0,0,0)",
+        }}
+      >
+        {text}
+      </div>
+    </motion.div>
   );
 }
 
-function CTAButton({
+// ─── Magnetic CTA ─────────────────────────────────────────────────────────────
+function MagneticBtn({
   href,
   children,
   primary,
 }: {
   href: string;
-  children: ReactNode;
+  children: React.ReactNode;
   primary?: boolean;
 }) {
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 280, damping: 28 });
+  const sy = useSpring(my, { stiffness: 280, damping: 28 });
+
+  const onMove = (e: React.MouseEvent<HTMLElement>) => {
+    const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    mx.set((e.clientX - (r.left + r.width / 2)) * 0.4);
+    my.set((e.clientY - (r.top + r.height / 2)) * 0.4);
+  };
+
   return (
     <motion.a
       href={href}
+      style={{ x: sx, y: sy, fontFamily: "'Inter Tight', sans-serif", willChange: "transform" }}
+      onMouseMove={onMove}
+      onMouseLeave={() => { mx.set(0); my.set(0); }}
       whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.2 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ scale: { duration: 0.2 } }}
       className={
         primary
-          ? "inline-flex min-h-[58px] items-center justify-center gap-3 rounded-full bg-[#E6FF4D] px-8 py-4 text-[14px] font-bold text-[#050505] transition-colors hover:bg-white"
-          : "inline-flex min-h-[58px] items-center justify-center gap-3 rounded-full border border-white/15 bg-white/[0.02] px-8 py-4 text-[14px] font-medium text-white/65 transition-all hover:border-white/30 hover:text-white"
+          ? "inline-flex items-center gap-2.5 px-8 py-4 bg-[#E6FF4D] text-[#050505] text-[13px] font-semibold tracking-wide rounded-full hover:bg-white transition-colors duration-300 select-none cursor-none"
+          : "inline-flex items-center gap-2.5 px-8 py-4 border border-white/[0.14] text-white/60 text-[13px] tracking-wide rounded-full hover:border-white/30 hover:text-white/85 transition-all duration-300 select-none cursor-none"
       }
     >
       {children}
@@ -60,236 +122,447 @@ function CTAButton({
   );
 }
 
+// ─── Labels config ────────────────────────────────────────────────────────────
+const LABELS: Array<{
+  text: string;
+  top?: string;
+  left?: string;
+  right?: string;
+  floatAmp: number;
+  floatDur: number;
+  entranceDelay: number;
+  pxFactor: number;
+}> = [
+    { text: "User Research", top: "20%", left: "5%", floatAmp: 9, floatDur: 4.4, entranceDelay: 2.2, pxFactor: 75 },
+    { text: "Design Systems", top: "16%", right: "5%", floatAmp: 7, floatDur: 5.1, entranceDelay: 2.4, pxFactor: 58 },
+    { text: "Wireframes", top: "42%", left: "3%", floatAmp: 11, floatDur: 4.0, entranceDelay: 2.6, pxFactor: 92 },
+    { text: "Prototyping", top: "40%", right: "3%", floatAmp: 9, floatDur: 4.6, entranceDelay: 2.3, pxFactor: 70 },
+    { text: "Case Studies", top: "65%", left: "6%", floatAmp: 8, floatDur: 5.3, entranceDelay: 2.5, pxFactor: 52 },
+    { text: "Interaction Design", top: "63%", right: "5%", floatAmp: 10, floatDur: 4.1, entranceDelay: 2.7, pxFactor: 85 },
+    { text: "Product Strategy", top: "29%", left: "18%", floatAmp: 7, floatDur: 4.9, entranceDelay: 2.8, pxFactor: 42 },
+    { text: "User Flows", top: "53%", right: "15%", floatAmp: 9, floatDur: 3.8, entranceDelay: 2.9, pxFactor: 62 },
+  ];
+
+// ─── HeroSection ─────────────────────────────────────────────────────────────
 export function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // ── Mouse tracking (normalised -0.5 → +0.5) ──
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const smX = useSpring(rawX, { stiffness: 24, damping: 20 });
+  const smY = useSpring(rawY, { stiffness: 24, damping: 20 });
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    const move = (e: MouseEvent) => {
+      rawX.set(e.clientX / window.innerWidth - 0.5);
+      rawY.set(e.clientY / window.innerHeight - 0.5);
+    };
+    window.addEventListener("mousemove", move, { passive: true });
+    return () => window.removeEventListener("mousemove", move);
+  }, [rawX, rawY, prefersReducedMotion]);
+
+  // ── Scroll parallax (different speeds per layer) ──
+  const { scrollY } = useScroll();
+  // Portrait: 0.9x — stays close
+  const portraitScrollY = useTransform(scrollY, [0, 800], [0, -72]);
+  // Bg text: 0.6x — recedes fastest (feels deepest)
+  const bgTextScrollY = useTransform(scrollY, [0, 800], [0, -200]);
+  // Labels: 0.8x
+  const labelScrollY = useTransform(scrollY, [0, 800], [0, -120]);
+  // Content: 1.0x (natural)
+  const contentScrollY = useTransform(scrollY, [0, 800], [0, -80]);
+  // Hero opacity out on scroll
+  const heroOpacity = useTransform(scrollY, [0, 420], [1, 0]);
+
+  // ── Mouse parallax (portrait and bg text) ──
+  const portMouseX = useTransform(smX, (v: number) => v * 30);
+  const portMouseY = useTransform(smY, (v: number) => v * 18);
+  const bgMouseX = useTransform(smX, (v: number) => v * -20);
+  const bgMouseY = useTransform(smY, (v: number) => v * -12);
+  const glowX = useTransform(smX, (v: number) => (v + 0.5) * 100);
+  const glowY = useTransform(smY, (v: number) => (v + 0.5) * 100);
+  const glowBg = useTransform(
+    [glowX, glowY],
+    ([x, y]: number[]) =>
+      `radial-gradient(700px circle at ${x}% ${y}%, rgba(230,255,77,0.042) 0%, transparent 70%)`
+  );
+
+  // ── Portrait tilt (subtle 3D rotation from mouse) ──
+  const tiltX = useTransform(smY, (v: number) => v * -6);
+  const tiltY = useTransform(smX, (v: number) => v * 5);
 
   return (
     <section
-      id="home"
-      className="relative min-h-[100svh] overflow-hidden bg-[#050505] text-white"
+      ref={sectionRef}
+      className="hero-section relative overflow-hidden bg-[#050505]"
+      style={{ minHeight: "100svh" }}
     >
-      {/* Background dot grid */}
+      {/* ── Cinematic entrance: full black overlay fades out ── */}
+      <motion.div
+        className="absolute inset-0 bg-[#050505] pointer-events-none"
+        style={{ zIndex: 100 }}
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 0 }}
+        transition={{ duration: 1.1, delay: 0.1, ease: "easeOut" }}
+      />
+
+      {/* ── Dot grid ── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.045) 1px, transparent 1px)",
+            "radial-gradient(circle, rgba(255,255,255,0.042) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
+          transform: "translate3d(0,0,0)",
         }}
       />
 
-      {/* Background glow */}
-      <div
+      {/* ── Mouse glow ── */}
+      <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: glowBg, zIndex: 1, willChange: "background" }}
+      />
+
+      {/* ── Ambient: violet ellipse ── */}
+      <motion.div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2.0, delay: 0.3 }}
         style={{
           background:
-            "radial-gradient(ellipse at 82% 0%, rgba(109,40,217,0.12) 0%, transparent 48%), radial-gradient(ellipse at 48% 100%, rgba(230,255,77,0.055) 0%, transparent 55%)",
+            "radial-gradient(ellipse at 82% -8%, rgba(109,40,217,0.1) 0%, transparent 52%)",
+        }}
+      />
+      {/* ── Ambient: warm glow bottom-center ── */}
+      <motion.div
+        aria-hidden
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[260px] pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2.0, delay: 1.2 }}
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 100%, rgba(230,255,77,0.05) 0%, transparent 70%)",
+          filter: "blur(12px)",
+          zIndex: 1,
         }}
       />
 
-      {/* Header */}
-      <header className="absolute left-0 right-0 top-0 z-40 flex items-center justify-between px-6 py-7 md:px-8 lg:px-12">
-        <a
-          href="#home"
-          className="text-[13px] font-bold uppercase tracking-[0.22em] text-white/85"
+      {/* ══════════════════════════════════════════════════════════
+          LAYER 1 — Background typography (deepest, moves most on scroll)
+      ══════════════════════════════════════════════════════════ */}
+      <motion.div
+        aria-hidden
+        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none overflow-hidden"
+        style={{
+          x: bgMouseX,
+          y: useTransform(
+            [bgMouseY, bgTextScrollY],
+            ([m, s]: number[]) => (m as number) + (s as number)
+          ),
+          zIndex: 2,
+          willChange: "transform",
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.8, delay: 0.5 }}
+      >
+        <div
+          style={{
+            fontFamily: "'Inter Tight', sans-serif",
+            fontWeight: 800,
+            fontSize: "clamp(72px, 15vw, 210px)",
+            lineHeight: 0.9,
+            letterSpacing: "-0.045em",
+            color: "rgba(255,255,255,0.036)",
+            textAlign: "center",
+          }}
         >
-          AG
-        </a>
-
-        <nav className="hidden items-center gap-9 text-[15px] text-white/50 md:flex">
-          <a className="transition-colors hover:text-white" href="#work">
-            Work
-          </a>
-          <a className="transition-colors hover:text-white" href="#expertise">
-            Expertise
-          </a>
-          <a className="transition-colors hover:text-white" href="#about">
-            About
-          </a>
-          <a className="transition-colors hover:text-white" href="#contact">
-            Contact
-          </a>
-        </nav>
-
-        <a
-          href="#contact"
-          className="rounded-full border border-white/15 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-white/70 transition-all hover:border-white/35 hover:text-white"
+          ANSHUMAN
+        </div>
+        <div
+          style={{
+            fontFamily: "'Inter Tight', sans-serif",
+            fontWeight: 800,
+            fontSize: "clamp(72px, 15vw, 210px)",
+            lineHeight: 0.9,
+            letterSpacing: "-0.045em",
+            color: "rgba(255,255,255,0.028)",
+            textAlign: "center",
+          }}
         >
-          Hire Me
-        </a>
-      </header>
-
-      {/* Desktop / laptop hero */}
-      <div className="relative hidden min-h-[100svh] md:block">
-        <div className="absolute left-8 top-[13%] z-20 flex items-center gap-3 text-[11px] uppercase tracking-[0.28em] text-white/45">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#E6FF4D]" />
-          UX/UI Designer
+          GUSAIN
         </div>
+      </motion.div>
 
-        <div className="absolute right-8 top-[13%] z-20 flex items-center gap-3 text-[11px] uppercase tracking-[0.28em] text-white/45">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.75)]" />
-          Open to Work
-        </div>
-
-        {/* Big background name */}
+      {/* ══════════════════════════════════════════════════════════
+          LAYER 2 — Portrait (centered, 80vh, scroll + mouse parallax)
+      ══════════════════════════════════════════════════════════ */}
+      <motion.div
+        className="hero-portrait-layer absolute inset-0 flex items-center justify-center pointer-events-none"
+        style={{
+          x: portMouseX,
+          y: useTransform(
+            [portMouseY, portraitScrollY],
+            ([m, s]: number[]) => (m as number) + (s as number)
+          ),
+          zIndex: 5,
+          willChange: "transform",
+        }}
+        initial={{ opacity: 0, scale: 1.06, filter: "blur(8px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        transition={{ duration: 1.4, delay: 0.9, ease: EASE }}
+      >
         <motion.div
-          aria-hidden
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, ease: EASE }}
-          className="pointer-events-none absolute inset-0 z-[1] flex flex-col items-center justify-center overflow-hidden select-none"
+          style={{
+            position: "relative",
+            rotateX: tiltX,
+            rotateY: tiltY,
+            transformStyle: "preserve-3d",
+            willChange: "transform",
+          }}
         >
-          <div className="text-center font-['Inter_Tight'] text-[clamp(92px,15vw,220px)] font-black leading-[0.86] tracking-[-0.06em] text-white/[0.035]">
-            ANSHUMAN
-            <br />
-            GUSAIN
-          </div>
-        </motion.div>
-
-        {/* Desktop floating labels */}
-        <div className="pointer-events-none absolute inset-0 z-20">
-          {DESKTOP_LABELS.map((label) => (
-            <motion.div
-              key={label.text}
-              initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.92 }}
-              animate={prefersReducedMotion ? undefined : { opacity: 1, scale: 1 }}
-              transition={{ duration: 0.75, delay: 0.35, ease: EASE }}
-              className="absolute"
-              style={{
-                top: label.top,
-                left: label.left,
-                right: label.right,
-              }}
-            >
-              <SkillPill>{label.text}</SkillPill>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Portrait */}
-        <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 24, scale: 0.98 }}
-          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1, delay: 0.15, ease: EASE }}
-          className="absolute inset-0 z-10 flex items-center justify-center"
-        >
-          <div className="relative mt-[-3vh] h-[min(76vh,700px)] w-[min(38vw,560px)] overflow-hidden bg-black/30">
+          <div
+            style={{
+              position: "relative",
+              height: "min(74vh, 640px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {/* Left rim light */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0 z-10"
               style={{
+                position: "absolute",
+                left: -2,
+                top: "20%",
+                width: 2,
+                height: "52%",
+                borderRadius: 100,
                 background:
-                  "radial-gradient(ellipse at 50% 42%, transparent 26%, rgba(5,5,5,0.48) 78%), linear-gradient(to bottom, rgba(5,5,5,0.25) 0%, transparent 28%, rgba(5,5,5,0.8) 100%)",
+                  "linear-gradient(to bottom, transparent, rgba(230,255,77,0.4), rgba(230,255,77,0.18), transparent)",
+                filter: "blur(3px)",
+                zIndex: 10,
               }}
             />
 
+            {/* Portrait image */}
             <img
               src={anshumanPhoto}
-              alt="Anshuman Gusain"
-              className="absolute left-1/2 top-[42%] z-[5] h-[68%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain grayscale-[0.8] brightness-[0.78] contrast-[1.12]"
+              alt="Anshuman Gusain — UX/UI Designer"
+              style={{
+                height: "100%",
+                width: "auto",
+                objectFit: "contain",
+                objectPosition: "bottom center",
+                display: "block",
+                filter:
+                  "grayscale(0.78) brightness(0.75) contrast(1.12) saturate(0.5)",
+                position: "relative",
+                zIndex: 2,
+                transform: "translate3d(0,-6%,0)",
+                willChange: "transform",
+              }}
             />
+
+            {/* Gradient masks — dissolve white bg */}
+            <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 3, background: "linear-gradient(to bottom, #050505 0%, rgba(5,5,5,0.72) 13%, rgba(5,5,5,0.08) 32%, transparent 48%)" }} />
+            <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 3, background: "linear-gradient(to top, #050505 0%, rgba(5,5,5,0.55) 9%, transparent 25%)" }} />
+            <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 3, background: "linear-gradient(to right, #050505 0%, rgba(5,5,5,0.65) 9%, transparent 30%)" }} />
+            <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 3, background: "linear-gradient(to left, #050505 0%, rgba(5,5,5,0.65) 9%, transparent 30%)" }} />
+            <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 4, background: "radial-gradient(ellipse at 50% 40%, transparent 26%, rgba(5,5,5,0.32) 70%, rgba(5,5,5,0.68) 100%)" }} />
+
+            {/* Studio floor glow */}
+            <div aria-hidden style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "90%", height: "30%", zIndex: 6, background: "radial-gradient(ellipse at 50% 100%, rgba(230,255,77,0.065) 0%, transparent 70%)", filter: "blur(10px)" }} />
           </div>
         </motion.div>
+      </motion.div>
 
-        {/* Desktop text + CTA */}
-        <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
-          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
-          className="absolute left-1/2 top-[66%] z-30 w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 px-6 text-center"
-        >
-          <h1 className="font-['Inter_Tight'] text-[clamp(44px,4.2vw,64px)] font-black leading-[0.92] tracking-[-0.055em] text-white">
-            Anshuman Gusain
-          </h1>
-
-          <p className="mx-auto mt-4 max-w-2xl text-[15px] tracking-wide text-white/50">
-            Product Designer · UX/UI Designer · Human-Centered Thinking
-          </p>
-
-          <div className="mx-auto mt-9 flex max-w-md items-center justify-center gap-4">
-            <CTAButton href="#work" primary>
-              View Case Studies <span>↗</span>
-            </CTAButton>
-
-            <CTAButton href="#contact">Let&apos;s Connect</CTAButton>
-          </div>
-
-          <div className="mt-10 text-[10px] uppercase tracking-[0.42em] text-white/35">
-            Scroll
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Mobile hero */}
-      <div className="relative z-20 flex min-h-[100svh] flex-col justify-center gap-5 px-5 pb-9 pt-24 md:hidden">
-        <div className="flex items-center justify-between gap-4 text-[10px] uppercase tracking-[0.2em] text-white/45">
-          <span className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#E6FF4D]" />
-            UX/UI Designer
-          </span>
-
-          <span className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            Open to Work
-          </span>
-        </div>
-
-        <div className="text-center">
-          <p className="mb-3 text-[11px] uppercase tracking-[0.22em] text-white/40">
-            Product Designer · UX/UI Designer
-          </p>
-
-          <h1 className="font-['Inter_Tight'] text-[clamp(42px,12vw,56px)] font-black leading-[0.94] tracking-[-0.055em] text-white">
-            Anshuman
-            <br />
-            Gusain
-          </h1>
-
-          <p className="mx-auto mt-4 max-w-[32ch] text-[14px] leading-6 text-white/50">
-            Human-centered portfolio focused on UX research, interaction design,
-            product thinking, and polished case studies.
-          </p>
-        </div>
-
-        <div className="no-scrollbar flex gap-2 overflow-x-auto py-1">
-          {MOBILE_LABELS.map((label) => (
-            <SkillPill key={label}>{label}</SkillPill>
-          ))}
-        </div>
-
-        <div className="relative h-[clamp(310px,46svh,430px)] overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.025]">
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center font-['Inter_Tight'] text-[clamp(74px,24vw,120px)] font-black leading-[0.86] tracking-[-0.07em] text-white/[0.035]">
-            ANSHUMAN
-            <br />
-            GUSAIN
-          </div>
-
-          <img
-            src={anshumanPhoto}
-            alt="Anshuman Gusain"
-            className="absolute bottom-[-3%] left-1/2 h-[104%] w-auto max-w-none -translate-x-1/2 object-contain grayscale-[0.78] brightness-[0.78] contrast-[1.12]"
+      {/* ══════════════════════════════════════════════════════════
+          LAYER 3 — Floating labels (scroll + mouse parallax)
+      ══════════════════════════════════════════════════════════ */}
+      <motion.div
+        className="hero-label-layer absolute inset-0 pointer-events-none"
+        style={{ y: labelScrollY, zIndex: 8, willChange: "transform" }}
+      >
+        {LABELS.map((label) => (
+          <FloatingLabel
+            key={label.text}
+            {...label}
+            smX={smX}
+            smY={smY}
           />
+        ))}
+      </motion.div>
 
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0"
+      {/* ══════════════════════════════════════════════════════════
+          CONTENT — choreographed sequence
+      ══════════════════════════════════════════════════════════ */}
+      <motion.div
+        className="hero-content-layer absolute inset-0 flex flex-col justify-between pointer-events-none"
+        style={{ opacity: heroOpacity, y: contentScrollY, zIndex: 10, willChange: "transform, opacity" }}
+      >
+        {/* ── Top bar ── */}
+        <motion.div
+          className="flex items-center justify-between px-8 pointer-events-auto"
+          style={{ paddingTop: 96 }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.6, ease: EASE }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#E6FF4D" }} />
+            <span
+              style={{
+                fontFamily: "'Inter Tight', sans-serif",
+                fontSize: 10,
+                color: "rgba(255,255,255,0.4)",
+                letterSpacing: "0.26em",
+                textTransform: "uppercase",
+              }}
+            >
+              UX/UI Designer
+            </span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+            <div
+              style={{
+                width: 5,
+                height: 5,
+                borderRadius: "50%",
+                background: "#4ade80",
+                boxShadow: "0 0 8px rgba(74,222,128,0.55)",
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "'Inter Tight', sans-serif",
+                fontSize: 10,
+                color: "rgba(255,255,255,0.38)",
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+              }}
+            >
+              Open to work
+            </span>
+          </div>
+        </motion.div>
+
+        {/* ── Bottom zone: name + title + CTAs ── */}
+        <div
+          className="pointer-events-auto"
+          style={{ padding: "0 48px 44px" }}
+        >
+          {/* Name */}
+          <div style={{ textAlign: "center", overflow: "hidden", marginBottom: 6 }}>
+            <motion.h1
+              style={{
+                fontFamily: "'Inter Tight', sans-serif",
+                fontWeight: 700,
+                fontSize: "clamp(1.75rem, 3.2vw, 2.75rem)",
+                letterSpacing: "-0.025em",
+                color: "#F5F5F5",
+                lineHeight: 1.1,
+                margin: 0,
+              }}
+              initial={{ y: "110%", opacity: 0 }}
+              animate={{ y: "0%", opacity: 1 }}
+              transition={{ duration: 0.95, delay: 1.2, ease: EASE }}
+            >
+              Anshuman Gusain
+            </motion.h1>
+          </div>
+
+          {/* Role */}
+          <motion.p
             style={{
-              background:
-                "linear-gradient(to bottom, #050505 0%, rgba(5,5,5,0.12) 22%, transparent 42%, rgba(5,5,5,0.75) 100%)",
+              fontFamily: "'Inter Tight', sans-serif",
+              fontSize: 12,
+              color: "#8A8A8A",
+              letterSpacing: "0.1em",
+              textAlign: "center",
+              marginBottom: 22,
+            }}
+            initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, delay: 1.38, ease: EASE }}
+          >
+            Product Designer &nbsp;·&nbsp; UX/UI Designer &nbsp;·&nbsp; Human-Centered Thinking
+          </motion.p>
+
+          {/* Hairline */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.0, delay: 1.55, ease: EASE }}
+            style={{
+              height: 1,
+              background: "rgba(255,255,255,0.07)",
+              transformOrigin: "center",
+              marginBottom: 22,
+              willChange: "transform",
             }}
           />
-        </div>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <CTAButton href="#work" primary>
-            View Case Studies <span>↗</span>
-          </CTAButton>
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, delay: 1.72, ease: EASE }}
+            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}
+          >
+            <MagneticBtn href="#work" primary>
+              View Case Studies
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
+                <path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </MagneticBtn>
+            <MagneticBtn href="#contact">Let's Connect</MagneticBtn>
+          </motion.div>
 
-          <CTAButton href="#contact">Let&apos;s Connect</CTAButton>
+          {/* Scroll nudge — static, orientation only */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.4, duration: 0.8, ease: EASE }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 7,
+              marginTop: 28,
+            }}
+          >
+            <div
+              style={{
+                width: 1,
+                height: 28,
+                background: "linear-gradient(to bottom, rgba(255,255,255,0.18), transparent)",
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "'Inter Tight', sans-serif",
+                fontSize: 9,
+                color: "#8A8A8A",
+                letterSpacing: "0.32em",
+                textTransform: "uppercase",
+              }}
+            >
+              Scroll
+            </span>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
