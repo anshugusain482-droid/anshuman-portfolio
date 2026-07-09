@@ -18,7 +18,6 @@ const PHRASES = [
   "Solving through empathy.",
 ];
 
-// ─── DNA traits ───────────────────────────────────────────────────────────────
 
 // ─── Static grid background (no looping animations) ──────────────────────────
 function GridBackground() {
@@ -635,102 +634,6 @@ export function ImpactSection() {
           </div>
         </div>
 
-        {/* ── Designer DNA panel ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.85, ease: EASE }}
-          className="relative rounded-3xl overflow-hidden"
-          style={{
-            background: "rgba(8,8,8,0.9)",
-            border: "1px solid rgba(255,255,255,0.07)",
-            backdropFilter: "blur(24px)",
-          }}
-        >
-          {/* Panel ambient */}
-          <div
-            aria-hidden
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse at 50% 120%, rgba(230,255,77,0.04) 0%, transparent 60%)",
-            }}
-          />
-
-          <div className="relative z-10 px-10 py-10">
-            {/* Panel header */}
-            <div className="flex items-center justify-between mb-10">
-              <div>
-                <div className="flex items-center gap-2.5 mb-2">
-                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#E6FF4D" }} />
-                  <span
-                    style={{
-                      fontFamily: "'Inter Tight', sans-serif",
-                      fontSize: 10,
-                      letterSpacing: "0.3em",
-                      textTransform: "uppercase",
-                      color: "#8A8A8A",
-                    }}
-                  >
-                    Designer DNA
-                  </span>
-                </div>
-                <p
-                  style={{
-                    fontFamily: "'Inter Tight', sans-serif",
-                    fontWeight: 600,
-                    fontSize: "clamp(1rem, 1.8vw, 1.4rem)",
-                    letterSpacing: "-0.025em",
-                    color: "#F0F0F0",
-                  }}
-                >
-                  Strengths I bring to every project.
-                </p>
-              </div>
-              <div
-                aria-hidden
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  background: "#E6FF4D",
-                  boxShadow: "0 0 12px rgba(230,255,77,0.5)",
-                }}
-              />
-            </div>
-
-            {/* DNA rings */}
-            <div className="flex items-center justify-between gap-4 flex-wrap">
-              {DNA.map((d, i) => (
-                <DNARing
-                  key={d.label}
-                  label={d.label}
-                  pct={d.pct}
-                  color={d.color}
-                  delay={0.2 + i * 0.12}
-                />
-              ))}
-            </div>
-
-            {/* Panel footer note */}
-            <div
-              className="mt-8 pt-6"
-              style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
-            >
-              <p
-                style={{
-                  fontFamily: "'Inter Tight', sans-serif",
-                  fontSize: 11,
-                  color: "rgba(255,255,255,0.2)",
-                  letterSpacing: "0.05em",
-                }}
-              >
-                Based on peer feedback, project outcomes, and self-assessment across 24+ projects.
-              </p>
-            </div>
-          </div>
-        </motion.div>
 
       </div>
     </section>
